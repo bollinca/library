@@ -6,7 +6,7 @@ function Book(title, author, pages, readStatus) {
     this.pages = pages;
     this.readStatus = readStatus;
 
-    this.info = [title, author, pages, readStatus];
+    this.info = [this.title, this.author, this.pages, this.readStatus];
 }
 
 Book.prototype.addBook = function addBookToLibrary() {
@@ -17,6 +17,6 @@ const cardContainer = document.querySelector('#card-container');
 function render(book) {
     let newCard = document.createElement('div');
     newCard.classList.add('card');
-    newCard.textContent = book.info;
+    newCard.textContent = book.join(' ');
     cardContainer.appendChild(newCard);
 }
