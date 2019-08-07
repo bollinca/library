@@ -1,3 +1,17 @@
 * {
     box-sizing: border-box;
 }
+
+.card {
+    border: black solid 1px;
+    height: 200px;
+    width: 45%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#card-container {
+    display: grid;
+    grid-template-rows: repeat(2, 100px);
+    grid-template-columns: repeat(2, 100px);
+}
