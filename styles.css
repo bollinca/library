@@ -25,6 +25,29 @@
 
 #new-book-form {
     position: fixed;
+    height: auto;
+    padding: 20px;
+    width: 300px;
+    top: 30%;
+    left: 50%;
+    background-color: pink;
+    font-size: 18px;
+    border: 2px dotted black;
+}
+
+#new-book-form input, #new-book-form label {
+    line-height: 16px;
+    margin: 5px 0;
+    padding: 8px 0;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+
+#new-book-form label, #new-book-form input.radio  {
+    display: inline-block;
+    width: auto;
+    padding: 8px 10px;
 }
 
 .invisible {
