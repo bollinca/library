@@ -6,10 +6,21 @@
 </head>
 
 <body>
+    <button id='new-book-button'>Add A New Book</button>
     <div class='centering-container'>
         <div id='card-container'>
         </div>
     </div>
+    <form id='new-book-form' class='invisible'>
+        <input type='text' name='title' placeholder='Title'>
+        <input type='text' name='author' placeholder='Author'>
+        <input type='text' name='pages' placeholder='# of pages'>
+        Read? Yes
+        <input type='radio' name='status'>
+        No
+        <input type='radio' name='status'>  
+        <input type='submit' name='submit'>
+    </form>
 </body>
 <script src='script.js'></script>
 

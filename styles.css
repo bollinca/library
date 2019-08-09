@@ -22,3 +22,11 @@
     grid-gap: 25px ;
     margin: 0 auto;
 }
+
+#new-book-form {
+    position: fixed;
+}
+
+.invisible {
+    visibility: hidden;
+}

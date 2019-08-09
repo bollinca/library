@@ -18,9 +18,9 @@ function render(book) {
     newCard.appendChild(cardPages);
     newCard.appendChild(cardStatus);
     cardTitle.textContent = book[0];
-    cardAuthor.textContent = book[1];
-    cardPages.textContent = book[2];
-    cardStatus.textContent = book[3];
+    cardAuthor.textContent = `Author: ${book[1]}`;
+    cardPages.textContent = `Page Count: ${book[2]}`;
+    cardStatus.textContent = `Finished?: ${book[3]}`;
     cardContainer.appendChild(newCard);
 }
 
@@ -37,6 +37,13 @@ Book.prototype.addBook = function addBookToLibrary() {
     myLibrary.push(this.info);
 }
 
+function showForm() {
+    newBookForm.classList.toggle('invisible')
+}
+
+const newBookForm = document.querySelector('#new-book-form');
+const newBookButton = document.querySelector('#new-book-button');
 const cardContainer = document.querySelector('#card-container');
+newBookButton.addEventListener('click', showForm);
 
 renderAll(myLibrary);
