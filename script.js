@@ -21,21 +21,25 @@ function renderAll(library) {
 
 function render(book) {
     let newCard = document.createElement('div');
-    let cardTitle = document.createElement('h2')
-    let cardAuthor = document.createElement('p')
-    let cardPages = document.createElement('p')
-    let cardStatus = document.createElement('p')
+    let cardTitle = document.createElement('h2');
+    let cardAuthor = document.createElement('p');
+    let cardPages = document.createElement('p');
+    let cardStatus = document.createElement('p');
+    let exitButton = document.createElement('button');
     newCard.appendChild(cardTitle);
     newCard.appendChild(cardAuthor);
     newCard.appendChild(cardPages);
     newCard.appendChild(cardStatus);
+    newCard.appendChild(exitButton);
 
     cardTitle.textContent = book.title;
     cardAuthor.textContent = `Author: ${book.author}`;
     cardPages.textContent = `Page Count: ${book.pages}`;
     cardStatus.textContent = `Finished?: ${book.readStatus}`;
+    exitButton.textContent = 'X';
     
     newCard.classList.add('card');
+    exitButton.classList.add('exit');
     cardContainer.appendChild(newCard);
 }
 
@@ -64,6 +68,13 @@ function clearForm() {
 
 function toggleForm() {
     bookForm.classList.toggle('invisible')
+}
+
+function removeBook() {
+    //find this books index
+    //remove this book from array: array.splice(position, 1);
+
+    renderAll(myLibrary);
 }
     
 const bookForm = document.querySelector('#new-book-form');

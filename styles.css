@@ -39,6 +39,16 @@ button, input[type='button'] {
     border: 5px double rgb(31, 21, 122);
 }
 
+.exit {
+    background-color: black;
+    height: 30px;
+    width: 30px;
+    position: relative;
+    left: 99%;
+    bottom: 10px;
+    border-radius: 0px;
+}
+
 #card-container {
     display: grid;
     grid-template-rows: repeat(2, 200px);
