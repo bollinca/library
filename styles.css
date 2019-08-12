@@ -39,7 +39,7 @@ button, input[type='button'] {
     border: 5px double rgb(31, 21, 122);
 }
 
-.exit {
+.delete {
     background-color: black;
     height: 30px;
     width: 30px;
