@@ -9,6 +9,19 @@ function Book(title, author, pages, readStatus) {
     this.info = [this.title, this.author, this.pages, this.readStatus];
 }
 
+Book.prototype.updateInfo = function newInfo() {
+    this.info = [this.title, this.author, this.pages, this.readStatus];
+}
+
+Book.prototype.toggleRead = function toggle() {
+    if (this.readStatus === 'no') {
+        this.readStatus = 'yes';
+    } else {
+        this.readStatus = 'no';
+    }
+    this.updateInfo();
+}
+
 Book.prototype.addBook = function addBookToLibrary() {
     myLibrary.push(this);
 }
