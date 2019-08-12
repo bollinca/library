@@ -1,4 +1,4 @@
-let myLibrary = [['hello', 'test', 123, 'no'], [1, 2, 3, 4], [5, 1, 6, 2], [52, 15, 15, 61]];
+let myLibrary = [new Book('hello', 'test', 123, 'no'), new Book(1, 2, 3, 4), new Book(5, 1, 6, 2), new Book(52, 15, 15, 61)];
 
 function renderAll(library) {
     for (let i = 0; i < library.length; i++) {
@@ -17,10 +17,10 @@ function render(book) {
     newCard.appendChild(cardAuthor);
     newCard.appendChild(cardPages);
     newCard.appendChild(cardStatus);
-    cardTitle.textContent = book[0];
-    cardAuthor.textContent = `Author: ${book[1]}`;
-    cardPages.textContent = `Page Count: ${book[2]}`;
-    cardStatus.textContent = `Finished?: ${book[3]}`;
+    cardTitle.textContent = book.title;
+    cardAuthor.textContent = `Author: ${book.author}`;
+    cardPages.textContent = `Page Count: ${book.pages}`;
+    cardStatus.textContent = `Finished?: ${book.readStatus}`;
     cardContainer.appendChild(newCard);
 }
 
@@ -38,12 +38,39 @@ Book.prototype.addBook = function addBookToLibrary() {
 }
 
 function showForm() {
-    newBookForm.classList.toggle('invisible')
+    bookForm.classList.toggle('invisible')
 }
 
-const newBookForm = document.querySelector('#new-book-form');
+function clearForm() {
+    bookForm[0].value = '';
+    bookForm[1].value = '';
+    bookForm[2].value = '';
+    bookForm.status.value = 'yes';
+    bookForm.classList.toggle('invisible');
+}
+
+function submitForm() {
+    const newBook = new Book(bookForm[0].value, bookForm[1].value, bookForm[2].value, findCheckedRadio());
+    console.log(typeof newBook);
+    render(newBook);
+    clearForm();
+}
+    
+function findCheckedRadio() {
+    for (let i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked) {
+            return radioButtons[i].value
+        }
+    }
+}
+
+const bookForm = document.querySelector('#new-book-form');
 const newBookButton = document.querySelector('#new-book-button');
 const cardContainer = document.querySelector('#card-container');
+const submitButton = document.querySelector('#submit-button')
+const radioButtons = document.querySelectorAll('.radio')
 newBookButton.addEventListener('click', showForm);
+
+submitButton.addEventListener('click', () => submitForm());
 
 renderAll(myLibrary);
