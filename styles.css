@@ -36,6 +36,7 @@ button.toggle {
     border-color: rgb(66, 110, 60);
     width: 100px;
     height: 30px;
+    margin: 0 0 15px 0;
 }
 
 button.read {
@@ -52,34 +53,41 @@ button.read::before {
 
 .centering-container {
     width: 99vw;
-    display: flex;   
+    display: flex;
 }
 
 .card {
     height: 300px;
     width: 100%;
-    text-align: left;
+    position: relative;
     padding: 0 30px;   
     border: 5px double rgb(31, 21, 122);
     overflow-y: auto;
+    margin: 0 auto;
+}
+
+.card p, .card h2 {
+    word-wrap: break-word;
+    padding: 0 10px;
 }
 
 .delete {
     background-color: black;
     height: 30px;
     width: 30px;
-    position: relative;
-    left: 99%;
-    bottom: 10px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
     border-radius: 0px;
 }
 
 #card-container {
     display: grid;
-    grid-template-rows: repeat(2, 300px);
-    grid-template-columns: repeat(4, 300px);
+    grid-template-rows: repeat(auto-fit, 300px);
+    grid-template-columns: repeat(auto-fit, 300px);
     grid-gap: 25px ;
-    margin: 0 auto;
+    width: 100%;
+    justify-content: center;
 }
 
 #new-book-form {
