@@ -139,11 +139,11 @@ function removeAll() {
 
 let bookForm = document.querySelector('#new-book-form');
 const radioButtons = document.querySelectorAll('.radio')
-const newBookButton = document.querySelector('#new-book-button');
+const newBookButton = Array.from(document.querySelectorAll('.new-book-button'));
 const cardContainer = document.querySelector('#card-container');
 const submitButton = document.querySelector('#add-button')
 
-newBookButton.addEventListener('click', toggleForm);
+newBookButton.forEach(button => button.addEventListener('click', toggleForm));
 submitButton.addEventListener('click', () => submitForm());
 
 myLibrary = [new Book('hello', 'test', 123, 'no'), new Book('A photo a day', 'Some dude', 365, 'yes'), new Book("Uh oh!", 'The Pantaloon Man', '89', 'no'), new Book('Death of a dying dead man', 'mr. yay', 15, 'yes')];
