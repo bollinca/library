@@ -14,18 +14,13 @@ Book.prototype.updateInfo = function newInfo() {
 }
 
 Book.prototype.toggleRead = function toggle(e) {
-    let currentTarget = e.target.attributes['data-index'].value;
-    let toggleArray = Array.from(document.querySelectorAll('.toggle'));;
-    console.log(currentTarget);
+    e.target.classList.toggle('read');
     if (this.readStatus === 'no') {
         this.readStatus = 'yes';
-        toggleArray[currentTarget].textContent = 'yes'
     } else {
         this.readStatus = 'no';
-        toggleArray[currentTarget].textContent = 'no';
     }
     this.updateInfo();
-    console.log(this.readStatus);
 }
 
 Book.prototype.addBook = function addBookToLibrary() {
@@ -66,11 +61,13 @@ function alwaysRender(book) {
         cardTitle.textContent = book.title;
         cardAuthor.textContent = `Author: ${book.author}`;
         cardPages.textContent = `Page Count: ${book.pages}`;
-        cardStatus.textContent = `${book.readStatus}`;
         deleteButton.textContent = 'X';
 
         newCard.classList.add('card');
         cardStatus.classList.add('toggle')
+        if(book.readStatus === 'yes') {
+            cardStatus.classList.add('read');
+        }
         deleteButton.classList.add('delete');
         cardContainer.appendChild(newCard);
         deleteButton.addEventListener('click', (e) => removeBook(e));
