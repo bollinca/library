@@ -13,18 +13,54 @@ Book.prototype.updateInfo = function newInfo() {
     this.info = [this.title, this.author, this.pages, this.readStatus];
 }
 
+Book.prototype.addBook = function addBookToLibrary() {
+    myLibrary.push(this);
+}
+
 Book.prototype.toggleRead = function toggle(e) {
-    e.target.classList.toggle('read');
     if (this.readStatus === 'no') {
         this.readStatus = 'yes';
     } else {
         this.readStatus = 'no';
     }
+    e.target.classList.toggle('read');
     this.updateInfo();
 }
 
-Book.prototype.addBook = function addBookToLibrary() {
-    myLibrary.push(this);
+function alwaysRender(book) {
+    let newCard = document.createElement('div');
+    newCard.setAttribute('data-index', myLibrary.indexOf(book));
+    newCard.classList.add('card');
+    
+    let cardTitle = document.createElement('h2');
+    cardTitle.textContent = book.title;
+    
+    let cardAuthor = document.createElement('p');
+    cardAuthor.textContent = `Author: ${book.author}`;
+    
+    let cardPages = document.createElement('p');
+    cardPages.textContent = `Page Count: ${book.pages}`;
+    
+    let cardStatus = document.createElement('button');
+    cardStatus.setAttribute('data-index', myLibrary.indexOf(book));
+    cardStatus.classList.add('toggle')
+    if(book.readStatus === 'yes') {
+        cardStatus.classList.add('read');
+    }
+    cardStatus.addEventListener('click', (e) => myLibrary[e.target.attributes['data-index'].value].toggleRead(e));
+
+    let deleteButton = document.createElement('button');
+    deleteButton.textContent = 'X';
+    deleteButton.setAttribute('data-index', myLibrary.indexOf(book));
+    deleteButton.classList.add('delete');
+    deleteButton.addEventListener('click', (e) => removeBook(e));
+
+    newCard.appendChild(cardTitle);
+    newCard.appendChild(cardAuthor);
+    newCard.appendChild(cardPages);
+    newCard.appendChild(cardStatus);
+    newCard.appendChild(deleteButton);
+    cardContainer.appendChild(newCard);
 }
 
 function renderAll(library) {
@@ -33,46 +69,13 @@ function renderAll(library) {
     }
 }
 
-function renderSelective(book) {
+function renderNew(book) {
     if (!(myLibrary.some(eachBook => areIdentical(book, eachBook)))) {
         book.addBook();
         alwaysRender(book);
     } else {
         alert('Books are identical, will not be added');
     }
-}
-
-function alwaysRender(book) {
-        let newCard = document.createElement('div');
-        let cardTitle = document.createElement('h2');
-        let cardAuthor = document.createElement('p');
-        let cardPages = document.createElement('p');
-        let cardStatus = document.createElement('button');
-        let deleteButton = document.createElement('button');
-        newCard.appendChild(cardTitle);
-        newCard.appendChild(cardAuthor);
-        newCard.appendChild(cardPages);
-        newCard.appendChild(cardStatus);
-        newCard.appendChild(deleteButton);
-
-        newCard.setAttribute('data-index', myLibrary.indexOf(book));
-        deleteButton.setAttribute('data-index', myLibrary.indexOf(book));
-        cardStatus.setAttribute('data-index', myLibrary.indexOf(book));
-        cardTitle.textContent = book.title;
-        cardAuthor.textContent = `Author: ${book.author}`;
-        cardPages.textContent = `Page Count: ${book.pages}`;
-        deleteButton.textContent = 'X';
-
-        newCard.classList.add('card');
-        cardStatus.classList.add('toggle')
-        if(book.readStatus === 'yes') {
-            cardStatus.classList.add('read');
-        }
-        deleteButton.classList.add('delete');
-        cardContainer.appendChild(newCard);
-        deleteButton.addEventListener('click', (e) => removeBook(e));
-        cardStatus.addEventListener('click', (e) => myLibrary[e.target.attributes['data-index'].value].toggleRead(e));
-
 }
 
 function areIdentical(book1, book2) {
@@ -82,9 +85,10 @@ function areIdentical(book1, book2) {
     return false
 }
 
+
 function submitForm() {
     const newBook = new Book(bookForm[0].value, bookForm[1].value, bookForm[2].value, findCheckedRadio());
-    renderSelective(newBook);
+    renderNew(newBook);
     clearForm();
 }
 
@@ -108,13 +112,6 @@ function toggleForm() {
     bookForm.classList.toggle('invisible')
 }
 
-function removeAll() {
-    let deleteThisMany = cardContainer.childNodes.length;
-    for (let i = 0; i < deleteThisMany; i++) {
-        cardContainer.removeChild(cardContainer.childNodes[0]);
-    }
-}
-
 function removeBook(e) {
     let deleteConfirm;
     let deleteSelector = e.target.attributes['data-index'].value;
@@ -133,7 +130,14 @@ function removeBook(e) {
     renderAll(myLibrary);
 }
 
-const bookForm = document.querySelector('#new-book-form');
+function removeAll() {
+    let deletionTotal = cardContainer.childNodes.length;
+    for (let i = 0; i < deletionTotal; i++) {
+        cardContainer.removeChild(cardContainer.childNodes[0]);
+    }
+}
+
+let bookForm = document.querySelector('#new-book-form');
 const radioButtons = document.querySelectorAll('.radio')
 const newBookButton = document.querySelector('#new-book-button');
 const cardContainer = document.querySelector('#card-container');
