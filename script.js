@@ -24,6 +24,7 @@ Book.prototype.toggleRead = function toggle(e) {
     }
     e.target.classList.toggle('read');
     this.updateInfo();
+    updateStorage();
 }
 
 function alwaysRender(book) {
@@ -149,21 +150,34 @@ function updateStorage() {
     localStorage.setItem('storedLibrary', JSON.stringify(myLibrary));
 }
 
+function clearStorage() {
+    let message = 'Click "OK" to revert entire library to default, demonstration books.'
+    if (confirm(message) === true) {
+        localStorage.clear();
+        removeAll();
+        myLibrary = [new Book('Demo', 'J.K. Fakerson', 243, 'no'), new Book('A photo a day', 'Mr Lenz de Kamera', 365, 'yes')];
+        renderAll(myLibrary);
+    }
+}
+
 let myLibrary = [];
 let bookForm = document.querySelector('#new-book-form');
 const radioButtons = document.querySelectorAll('.radio');
 const newBookButton = Array.from(document.querySelectorAll('.new-book-button'));
 const cardContainer = document.querySelector('#card-container');
 const submitButton = document.querySelector('#add-button');
+const storageClearButton = document.querySelector('#storage-button');
 
 newBookButton.forEach(button => button.addEventListener('click', toggleForm));
 submitButton.addEventListener('click', () => submitForm());
-
+storageClearButton.addEventListener('click', () => clearStorage());
 
 if (checkStorage() === 0) {
-    myLibrary = [new Book('hello', 'test', 123, 'no'), new Book('A photo a day', 'Some dude', 365, 'yes'), new Book("Uh oh!", 'The Pantaloon Man', '89', 'no'), new Book('Death of a dying dead man', 'mr. yay', 15, 'yes')];
+    myLibrary = [new Book('Demo', 'J.K. Fakerson', 243, 'no'), new Book('A photo a day', 'Mr Lenz de Kamera', 365, 'yes')];
 } else if (checkStorage() === 1) {
     myLibrary = JSON.parse(localStorage.getItem('storedLibrary'));
+    let tempLibrary = myLibrary.map(book => Object.values(book));
+    myLibrary = tempLibrary.map(book => new Book(...book));
 }
 
 renderAll(myLibrary);
