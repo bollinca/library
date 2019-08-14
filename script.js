@@ -66,7 +66,7 @@ function alwaysRender(book) {
 function checkPages(pageNumber) {
     pageNumber = Number(pageNumber);
     if (pageNumber !== 0) {
-        return ((pageNumber <= 3000 && pageNumber > 0
+        return ((pageNumber <= 20000 && pageNumber > 0
             || (pageNumber === NaN)))
     }
     else {
