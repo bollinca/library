@@ -63,6 +63,17 @@ function alwaysRender(book) {
     cardContainer.appendChild(newCard);
 }
 
+function checkPages(pageNumber) {
+    pageNumber = Number(pageNumber);
+    if (pageNumber !== 0) {
+        return ((pageNumber <= 3000 && pageNumber > 0
+            || (pageNumber === NaN)))
+    }
+    else {
+        return false;
+    }
+}
+
 function renderAll(library) {
     for (let i = 0; i < library.length; i++) {
         alwaysRender(library[i]);
@@ -87,9 +98,19 @@ function areIdentical(book1, book2) {
 
 
 function submitForm() {
-    const newBook = new Book(bookForm[0].value, bookForm[1].value, bookForm[2].value, findCheckedRadio());
-    renderNew(newBook);
-    clearForm();
+    const newBook = new Book(bookForm[0].value.trim(), bookForm[1].value.trim(), bookForm[2].value.trim(), findCheckedRadio());
+    if (!bookForm[0].value.trim()) {
+        alert('Please enter a valid title');
+        clearForm();
+        return;
+    }
+    if (checkPages(bookForm[2].value) === true) {
+        renderNew(newBook);
+        clearForm();
+    } else {
+        alert('Invalid page number submitted');
+        clearForm();
+    }
 }
 
 function findCheckedRadio() {
