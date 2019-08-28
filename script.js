@@ -1,30 +1,28 @@
-function Book(title, author, pages, readStatus) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.readStatus = readStatus;
-
-    this.info = [this.title, this.author, this.pages, this.readStatus];
-}
-
-Book.prototype.updateInfo = function newInfo() {
-    this.info = [this.title, this.author, this.pages, this.readStatus];
-}
-
-Book.prototype.addBook = function addBookToLibrary() {
-    myLibrary.push(this);
-    updateStorage();
-}
-
-Book.prototype.toggleRead = function toggle(e) {
-    if (this.readStatus === 'no') {
-        this.readStatus = 'yes';
-    } else {
-        this.readStatus = 'no';
+class Book {
+    constructor(title, author, pages, readStatus){
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.readStatus = readStatus;
+        this.info = [this.title, this.author, this.pages, this.readStatus];
     }
-    e.target.classList.toggle('read');
-    this.updateInfo();
-    updateStorage();
+    updateInfo() {
+        this.info = [this.title, this.author, this.pages, this.readStatus];
+    }
+    addBook() {
+        myLibrary.push(this);
+        updateStorage();
+    }
+    toggleRead(e) {
+        if (this.readStatus === 'no') {
+            this.readStatus = 'yes';
+        } else {
+            this.readStatus = 'no';
+        }
+        e.target.classList.toggle('read');
+        this.updateInfo();
+        updateStorage();
+    }
 }
 
 function alwaysRender(book) {
