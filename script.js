@@ -66,11 +66,9 @@ function alwaysRender (book) {
 
 function checkPages (pageNumber) {
   pageNumber = Number(pageNumber)
-  if (pageNumber !== 0 && (pageNumber <= 20000 && pageNumber > 0) && !(isNaN(pageNumber))) {
-    return true
-  } else {
-    return false
-  }
+  return (pageNumber !== 0 &&
+    (pageNumber <= 20000 && pageNumber > 0) &&
+    !(isNaN(pageNumber)))
 }
 
 function renderAll (library) {
@@ -89,10 +87,7 @@ function renderNew (book) {
 }
 
 function areIdentical (book1, book2) {
-  if (book1.info.toString() === book2.info.toString()) {
-    return true
-  }
-  return false
+  return (book1.info.toString() === book2.info.toString())
 }
 
 function submitForm () {
@@ -158,11 +153,7 @@ function removeAll () {
 }
 
 function checkStorage () {
-  if (window.localStorage.storedLibrary && window.localStorage.storedLibrary.length > 1) {
-    return 1
-  } else {
-    return 0
-  }
+  return (window.localStorage.storedLibrary && window.localStorage.storedLibrary.length > 1)
 }
 
 function updateStorage () {
@@ -176,6 +167,7 @@ function clearStorage () {
     removeAll()
     myLibrary = [new Book('Demo', 'J.K. Fakerson', 243, 'no'), new Book('A photo a day', 'Mr Lenz de Kamera', 365, 'yes')]
     renderAll(myLibrary)
+    updateStorage()
   }
 }
 
@@ -191,9 +183,9 @@ newBookButton.forEach(button => button.addEventListener('click', toggleForm))
 submitButton.addEventListener('click', () => submitForm())
 storageClearButton.addEventListener('click', () => clearStorage())
 
-if (checkStorage() === 0) {
+if (checkStorage() === false) {
   myLibrary = [new Book('Demo', 'J.K. Fakerson', 243, 'no'), new Book('A photo a day', 'Mr Lenz de Kamera', 365, 'yes')]
-} else if (checkStorage() === 1) {
+} else if (checkStorage() === true) {
   myLibrary = JSON.parse(window.localStorage.getItem('storedLibrary'))
   const tempLibrary = myLibrary.map(book => Object.values(book))
   myLibrary = tempLibrary.map(book => new Book(...book))
