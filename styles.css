@@ -10,6 +10,10 @@ h1 {
     margin: 30px 0 0 0;
 }
 
+input:invalid {
+    border: red dotted 2px;
+}
+
 .new-book-button, #storage-button {
     padding: 10px 20px;
     margin: 20px 0 40px 0;
