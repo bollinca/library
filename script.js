@@ -64,32 +64,6 @@ function alwaysRender (book) {
   cardContainer.appendChild(newCard)
 }
 
-function checkPages (pageNumber) {
-  pageNumber = Number(pageNumber)
-  return (pageNumber !== 0 &&
-    (pageNumber <= 20000 && pageNumber > 0) &&
-    !(isNaN(pageNumber)))
-}
-
-function renderAll (library) {
-  for (let i = 0; i < library.length; i++) {
-    alwaysRender(library[i])
-  }
-}
-
-function renderNew (book) {
-  if (!(myLibrary.some(eachBook => areIdentical(book, eachBook)))) {
-    book.addBook()
-    alwaysRender(book)
-  } else {
-    window.alert('Books are identical, will not be added')
-  }
-}
-
-function areIdentical (book1, book2) {
-  return (book1.info.toString() === book2.info.toString())
-}
-
 function submitForm () {
   const newBook = new Book(bookForm[0].value.trim(), bookForm[1].value.trim(), bookForm[2].value.trim(), findCheckedRadio())
   if (!bookForm[0].value.trim()) {
@@ -122,6 +96,26 @@ function clearForm () {
   toggleForm()
 }
 
+function checkPages (pageNumber) {
+  pageNumber = Number(pageNumber)
+  return (pageNumber !== 0 &&
+    (pageNumber <= 20000 && pageNumber > 0) &&
+    !(isNaN(pageNumber)))
+}
+
+function renderNew (book) {
+  if (!(myLibrary.some(eachBook => areIdentical(book, eachBook)))) {
+    book.addBook()
+    alwaysRender(book)
+  } else {
+    window.alert('Books are identical, will not be added')
+  }
+}
+
+function areIdentical (book1, book2) {
+  return (book1.info.toString() === book2.info.toString())
+}
+
 function toggleForm () {
   bookForm.classList.toggle('invisible')
 }
@@ -152,12 +146,10 @@ function removeAll () {
   }
 }
 
-function checkStorage () {
-  return (window.localStorage.storedLibrary && window.localStorage.storedLibrary.length > 1)
-}
-
-function updateStorage () {
-  window.localStorage.setItem('storedLibrary', JSON.stringify(myLibrary))
+function renderAll (library) {
+  for (let i = 0; i < library.length; i++) {
+    alwaysRender(library[i])
+  }
 }
 
 function clearStorage () {
@@ -169,6 +161,14 @@ function clearStorage () {
     renderAll(myLibrary)
     updateStorage()
   }
+}
+
+function checkStorage () {
+  return (window.localStorage.storedLibrary && window.localStorage.storedLibrary.length > 1)
+}
+
+function updateStorage () {
+  window.localStorage.setItem('storedLibrary', JSON.stringify(myLibrary))
 }
 
 let myLibrary = []
