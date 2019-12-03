@@ -75,27 +75,65 @@ function alwaysRender (book) {
 
 const formSubmitter = {
   newBook: {},
+  formFields: {
+    title: bookForm[0],
+    author: bookForm[1],
+    pages: bookForm[2]
+  },
 
   submitForm: function () {
     if (this.titleValidity() === true &&
       this.authorValidity() === true &&
-      this.pageValidity() === true) {
+      this.pagesValidity() === true) {
       this.updateNewBook()
       renderNew(this.newBook)
       clearForm()
-    } else if (this.titleValidity !== true || this.authorValidity !== true || this.pageValidity !== true) {
-      console.log(`${this.titleValidity()} ${this.authorValidity()} ${this.pageValidity()}`)
+    } else if (this.titleValidity() !== true || this.authorValidity() !== true || this.pagesValidity() !== true) {
+      console.log(`${this.titleValidity()} ${this.authorValidity()} ${this.pagesValidity()}`)
+      if (this.titleValidity() !== true) {
+        this.formFields.title.setCustomValidity('Please enter a title.')
+      }
+      if (this.authorValidity() !== true) {
+        this.formFields.author.setCustomValidity('Please enter the author\'s name')
+      }
+      if (this.pagesValidity() !== true) {
+        this.formFields.pages.setCustomValidity('No larger than five digits, only using numerals 0-9')
+      }
     }
   },
 
+  // setValidityListeners: function () {
+  //   this.formFields.title.addEventListener('input', () => {
+  //     if (this.titleValidity() === true) {
+  //       this.formFields.title.setCustomValidity('Please enter a title.')
+  //     } else {
+  //       this.formFields.title.setCustomValidity('')
+  //     }
+  //   })
+  //   this.formFields.author.addEventListener('input', () => {
+  //     if (this.authorValidity() !== true) {
+  //       this.formFields.author.setCustomValidity('Please enter the author\'s name')
+  //     } else {
+  //       this.formFields.author.setCustomValidity('')
+  //     }
+  //   })
+  //   this.formFields.pages.addEventListener('input', () => {
+  //     if (this.pagesValidity() !== true) {
+  //       this.formFields.pages.setCustomValidity('No larger than five digits, only using numerals 0-9')
+  //     } else {
+  //       this.formFields.pages.setCustomValidity('')
+  //     }
+  //   })
+  // },
+
   titleValidity: function () {
-    return bookForm[0].checkValidity()
+    return this.formFields.title.checkValidity()
   },
   authorValidity: function () {
-    return bookForm[1].checkValidity()
+    return this.formFields.author.checkValidity()
   },
-  pageValidity: function () {
-    return bookForm[2].checkValidity()
+  pagesValidity: function () {
+    return this.formFields.pages.checkValidity()
   },
   updateNewBook: function () {
     this.newBook = new Book(bookForm[0].value.trim(), bookForm[1].value.trim(), bookForm[2].value.trim(), findCheckedRadio())
