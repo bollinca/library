@@ -14,7 +14,7 @@ input:invalid {
     border: red dotted 2px;
 }
 
-.new-book-button, #storage-button {
+.new-book-button, #storage-button, .button-close-form {
     padding: 10px 20px;
     margin: 20px 0 40px 0;
     background-color: white;

@@ -1,3 +1,12 @@
+let myLibrary = []
+const bookForm = document.querySelector('#new-book-form')
+const radioButtons = document.querySelectorAll('.radio')
+const newBookButton = Array.from(document.querySelectorAll('.new-book-button'))
+const buttonCloseForm = document.querySelector('.button-close-form')
+const cardContainer = document.querySelector('#card-container')
+const submitButton = document.querySelector('#add-button')
+const storageClearButton = document.querySelector('#storage-button')
+
 class Book {
   constructor (title, author, pages, readStatus) {
     this.title = title
@@ -64,19 +73,32 @@ function alwaysRender (book) {
   cardContainer.appendChild(newCard)
 }
 
-function submitForm () {
-  const newBook = new Book(bookForm[0].value.trim(), bookForm[1].value.trim(), bookForm[2].value.trim(), findCheckedRadio())
-  if (!bookForm[0].value.trim()) {
-    window.alert('Please enter a valid title')
-    clearForm()
-    return
-  }
-  if (checkPages(bookForm[2].value) === true) {
-    renderNew(newBook)
-    clearForm()
-  } else {
-    window.alert('Invalid page number submitted')
-    clearForm()
+const formSubmitter = {
+  newBook: {},
+
+  submitForm: function () {
+    if (this.titleValidity() === true &&
+      this.authorValidity() === true &&
+      this.pageValidity() === true) {
+      this.updateNewBook()
+      renderNew(this.newBook)
+      clearForm()
+    } else if (this.titleValidity !== true || this.authorValidity !== true || this.pageValidity !== true) {
+      console.log(`${this.titleValidity()} ${this.authorValidity()} ${this.pageValidity()}`)
+    }
+  },
+
+  titleValidity: function () {
+    return bookForm[0].checkValidity()
+  },
+  authorValidity: function () {
+    return bookForm[1].checkValidity()
+  },
+  pageValidity: function () {
+    return bookForm[2].checkValidity()
+  },
+  updateNewBook: function () {
+    this.newBook = new Book(bookForm[0].value.trim(), bookForm[1].value.trim(), bookForm[2].value.trim(), findCheckedRadio())
   }
 }
 
@@ -94,13 +116,6 @@ function clearForm () {
   bookForm[2].value = ''
   bookForm.status.value = 'yes'
   toggleForm()
-}
-
-function checkPages (pageNumber) {
-  pageNumber = Number(pageNumber)
-  return (pageNumber !== 0 &&
-    (pageNumber <= 20000 && pageNumber > 0) &&
-    !(isNaN(pageNumber)))
 }
 
 function renderNew (book) {
@@ -157,6 +172,7 @@ function clearStorage () {
   if (window.confirm(message) === true) {
     window.localStorage.clear()
     removeAll()
+    clearForm()
     myLibrary = [new Book('Demo', 'J.K. Fakerson', 243, 'no'), new Book('A photo a day', 'Mr Lenz de Kamera', 365, 'yes')]
     renderAll(myLibrary)
     updateStorage()
@@ -171,16 +187,11 @@ function updateStorage () {
   window.localStorage.setItem('storedLibrary', JSON.stringify(myLibrary))
 }
 
-let myLibrary = []
-const bookForm = document.querySelector('#new-book-form')
-const radioButtons = document.querySelectorAll('.radio')
-const newBookButton = Array.from(document.querySelectorAll('.new-book-button'))
-const cardContainer = document.querySelector('#card-container')
-const submitButton = document.querySelector('#add-button')
-const storageClearButton = document.querySelector('#storage-button')
-
-newBookButton.forEach(button => button.addEventListener('click', toggleForm))
-submitButton.addEventListener('click', () => submitForm())
+newBookButton.forEach(button => button.addEventListener('click', () => toggleForm()))
+buttonCloseForm.addEventListener('click', () => {
+  clearForm()
+})
+submitButton.addEventListener('click', () => formSubmitter.submitForm())
 storageClearButton.addEventListener('click', () => clearStorage())
 
 if (checkStorage() === false) {
