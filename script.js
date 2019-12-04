@@ -88,43 +88,29 @@ const formSubmitter = {
       this.updateNewBook()
       renderNew(this.newBook)
       clearForm()
-    } else if (this.titleValidity() !== true || this.authorValidity() !== true || this.pagesValidity() !== true) {
-      console.log(`${this.titleValidity()} ${this.authorValidity()} ${this.pagesValidity()}`)
-      if (this.titleValidity() !== true) {
-        this.formFields.title.setCustomValidity('Please enter a title.')
-      }
-      if (this.authorValidity() !== true) {
-        this.formFields.author.setCustomValidity('Please enter the author\'s name')
-      }
-      if (this.pagesValidity() !== true) {
-        this.formFields.pages.setCustomValidity('No larger than five digits, only using numerals 0-9')
-      }
     }
   },
 
-  // setValidityListeners: function () {
-  //   this.formFields.title.addEventListener('input', () => {
-  //     if (this.titleValidity() === true) {
-  //       this.formFields.title.setCustomValidity('Please enter a title.')
-  //     } else {
-  //       this.formFields.title.setCustomValidity('')
-  //     }
-  //   })
-  //   this.formFields.author.addEventListener('input', () => {
-  //     if (this.authorValidity() !== true) {
-  //       this.formFields.author.setCustomValidity('Please enter the author\'s name')
-  //     } else {
-  //       this.formFields.author.setCustomValidity('')
-  //     }
-  //   })
-  //   this.formFields.pages.addEventListener('input', () => {
-  //     if (this.pagesValidity() !== true) {
-  //       this.formFields.pages.setCustomValidity('No larger than five digits, only using numerals 0-9')
-  //     } else {
-  //       this.formFields.pages.setCustomValidity('')
-  //     }
-  //   })
-  // },
+  setValidityListeners: function () {
+    this.formFields.title.addEventListener('input', () => {
+      this.formFields.title.setCustomValidity('')
+      if (this.titleValidity() !== true) {
+        this.formFields.title.setCustomValidity('Please enter a title.')
+      }
+    })
+    this.formFields.author.addEventListener('input', () => {
+      this.formFields.author.setCustomValidity('')
+      if (this.authorValidity() !== true) {
+        this.formFields.author.setCustomValidity('Please enter the author\'s name')
+      }
+    })
+    this.formFields.pages.addEventListener('input', () => {
+      this.formFields.pages.setCustomValidity('')
+      if (this.pagesValidity() !== true) {
+        this.formFields.pages.setCustomValidity('No larger than five digits, only using numerals 0-9')
+      }
+    })
+  },
 
   titleValidity: function () {
     return this.formFields.title.checkValidity()
@@ -241,3 +227,4 @@ if (checkStorage() === false) {
 }
 
 renderAll(myLibrary)
+formSubmitter.setValidityListeners()
