@@ -196,6 +196,7 @@ function clearStorage () {
   if (window.confirm(message) === true) {
     window.localStorage.clear()
     removeAll()
+    toggleForm()
     clearForm()
     myLibrary = [new Book('Demo', 'J.K. Fakerson', 243, 'no'), new Book('A photo a day', 'Mr Lenz de Kamera', 365, 'yes')]
     renderAll(myLibrary)
